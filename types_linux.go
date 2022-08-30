@@ -1,4 +1,4 @@
-//go:build !linux
+//go:build linux
 
 /*
  * Tencent is pleased to support the open source community by making TKEStack available.
@@ -19,16 +19,19 @@
 
 package nvml
 
+// #cgo CFLAGS: -I/usr/local/cuda/include
+// #include "nvml_dl.h"
+import "C"
 import "time"
 
 const (
-	szDriver             = 80 // C.NVML_SYSTEM_DRIVER_VERSION_BUFFER_SIZE
-	szName               = 64 // C.NVML_DEVICE_NAME_BUFFER_SIZE
-	szUUID               = 80 // C.NVML_DEVICE_UUID_BUFFER_SIZE
+	szDriver             = C.NVML_SYSTEM_DRIVER_VERSION_BUFFER_SIZE
+	szName               = C.NVML_DEVICE_NAME_BUFFER_SIZE
+	szUUID               = C.NVML_DEVICE_UUID_BUFFER_SIZE
 	szProcName           = 64
-	OP_SUCCESS           = 0  // C.NVML_SUCCESS
-	OP_INSUFFICIENT_SIZE = 7  // C.NVML_ERROR_INSUFFICIENT_SIZE
-	OP_TIMEOUT           = 10 // C.NVML_ERROR_TIMEOUT
+	OP_SUCCESS           = C.NVML_SUCCESS
+	OP_INSUFFICIENT_SIZE = C.NVML_ERROR_INSUFFICIENT_SIZE
+	OP_TIMEOUT           = C.NVML_ERROR_TIMEOUT
 	maxDevices           = 128
 )
 
@@ -61,10 +64,7 @@ const (
 	BRAND_COUNT
 )
 
-type C_nvmlDevice_t struct {
-}
-
-type GpuHandle struct{ dev C_nvmlDevice_t }
+type GpuHandle struct{ dev C.nvmlDevice_t }
 
 type BridgeChipInfo struct {
 	FwVersion uint
@@ -239,9 +239,7 @@ type ProcessUtilizationSample struct {
 	DecUtil   uint
 }
 
-type C_nvmlEventSet_t struct{}
-
-type EventSet struct{ set C_nvmlEventSet_t }
+type EventSet struct{ set C.nvmlEventSet_t }
 
 type EventType uint64
 

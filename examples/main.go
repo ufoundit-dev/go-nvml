@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ufoundit-dev/nvml"
+	"tkestack.io/nvml"
 )
 
 func failedMsg(msg string, err error) {

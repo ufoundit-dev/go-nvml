@@ -1,12 +1,10 @@
 //+build: linux
 package nvml
 
-import gonvml "github.com/tkestack/go-nvml"
-
 import "time"
 
 type GpuHandleImplement struct {
-	handle gonvml.GpuHandle
+	handle GpuHandle
 }
 
 func NewGpuHandleImplement(h GpuHandle) *GpuHandleImplement {
